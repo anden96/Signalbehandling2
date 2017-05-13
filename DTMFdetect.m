@@ -15,7 +15,6 @@ function result = DTMFdetect(filenumber)
 
 signals = generate_secret_data(filenumber);
 
-
 for sig_idx = 1:6, % 6 signaler ska analyseras
    % figure;
    % plot(signals(:,sig_idx));
@@ -27,15 +26,19 @@ for sig_idx = 1:6, % 6 signaler ska analyseras
         %
         % signals(:,sig_idx) är signalvektorn med alla 4 symboler 
         
-        detected_symbol = detekt(signals(sym_idx,sig_idx)); % Dålig algoritm som alltid gissar 'A'!
+        detected_symbol = detekt(signals(:,sig_idx),sym_idx); % Dålig algoritm som alltid gissar 'A'!
         result(sig_idx,sym_idx) = detected_symbol; % tilldela resultat
         
     end
 end
-
+end
 %% Här under (i denna fil) lägger ni in de hjälpfunktioner som ni skapar
 %% och anropar från huvudfunktionen ovan.
-function symbol = detekt(x)
+function symbol = detekt(x1,sym_idx)
+symbol='?';
+
+x= x1((sym_idx-1)*640+1:960+(sym_idx-1)*640,:);
+
 
 n=2;
 Rp=3; 
@@ -77,7 +80,7 @@ atot=[a1;a2;a3;a4;a5;a6;a7;a8];
  bFrekv = [false; false; false; false; false; false; false; false];
     
 for k=1:8
-        
+
         y=filter(btot(k,:),atot(k,:),x);
 
         N=length(x);
@@ -129,4 +132,3 @@ for k=1:8
 
 end
 
-end
