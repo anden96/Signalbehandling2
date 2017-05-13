@@ -1,5 +1,6 @@
 function result = DTMFdetect(filenumber)
 %
+%
 % Funktion som avkodar DTMF signaler
 % 
 % Funktionen generate_secret_data.p samt DTMFgen.m måste finnas i samma 
@@ -26,17 +27,18 @@ for sig_idx = 1:6, % 6 signaler ska analyseras
         %
         % signals(:,sig_idx) är signalvektorn med alla 4 symboler 
         
-        detected_symbol = detekt(signal(sym_idx,sig_idx)); % Dålig algoritm som alltid gissar 'A'!
+        detected_symbol = detekt(signals(sym_idx,sig_idx)); % Dålig algoritm som alltid gissar 'A'!
         result(sig_idx,sym_idx) = detected_symbol; % tilldela resultat
         
     end
 end
- 
+
 %% Här under (i denna fil) lägger ni in de hjälpfunktioner som ni skapar
 %% och anropar från huvudfunktionen ovan.
 function symbol = detekt(x)
 
-    
+n=2;
+Rp=3; 
 % Höga frekvenser
 % 5 - 1209
 % 6 - 1336Hz
@@ -71,7 +73,8 @@ Wn8=[(1633-10)/(4*10^3) (1633+10)/(4*10^3)];
 % Filterbanken
 btot=[b1;b2;b3;b4;b5;b6;b7;b8];
 atot=[a1;a2;a3;a4;a5;a6;a7;a8];    
-    
+
+ bFrekv = [false; false; false; false; false; false; false; false];
     
 for k=1:8
         
@@ -123,5 +126,7 @@ for k=1:8
     elseif(bFrekv(4) & bFrekv(8))
         symbol='D';
     end
+
+end
 
 end
