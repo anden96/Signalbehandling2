@@ -42,15 +42,25 @@ Wn8=[(1633-10)/(4*10^3) (1633+10)/(4*10^3)];
 % Filterbanken
 btot=[b1;b2;b3;b4;b5;b6;b7;b8];
 atot=[a1;a2;a3;a4;a5;a6;a7;a8];
+
+
+% FÖr att lagra frekvenser
+bFrekv = [false; false; false; false; false; false; false; false];
+%%
 for k=1:8
-    y=filter(btot(k,:),atot(k,:),x)
-    figure(k)
-    plot(abs(fft(y)))
+    y=filter(btot(k,:),atot(k,:),x)    
     
     N=960;
     fs=8000;
     
+    [value post] = max(y) % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
     
+    if(value-100 > 0)
+        value
+        bFrekv(k,1) = true;
+        figure(k)
+        plot(abs(fft(y)))
+    end
 end
 
 
@@ -63,10 +73,6 @@ plot(abs(fft(y1)))
 figure(2)
 plot(abs(fft(y2)))
 
-
-
-
-knapp = [false false false false false false false false];
 
 test1 = abs(fft(y1));
 [value1 k1] = max(test1);

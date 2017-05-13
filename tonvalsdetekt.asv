@@ -1,7 +1,6 @@
 %% Röj upp lite 
-x = DTMFgen('1',40,40,0)
-figure(3)
-plot(x)
+x = DTMFgen('1',40,40,0);
+
 n=2;
 Rp=3;
 % Låga frekvenserna
@@ -16,34 +15,52 @@ Rp=3;
 % 8 - 1633Hz
 % 
 Wn1=[(697-10)/(4*10^3) (697+10)/(4*10^3)];
-[b1,a1] = cheby1(n,Rp,Wn)
+[b1,a1] = cheby1(n,Rp,Wn1);
 %  w=2*pi*667/8000;
 
 Wn2=[(770-10)/(4*10^3) (770+10)/(4*10^3)];
-[b2,a2] = cheby1(n,Rp,Wn2)
+[b2,a2] = cheby1(n,Rp,Wn2);
 
 Wn3=[(852-10)/(4*10^3) (852+10)/(4*10^3)];
-[b3,a3] = cheby1(n,Rp,Wn3)
+[b3,a3] = cheby1(n,Rp,Wn3);
 
 Wn4=[(941-10)/(4*10^3) (941+10)/(4*10^3)];
-[b4,a4] = cheby1(n,Rp,Wn4)
+[b4,a4] = cheby1(n,Rp,Wn4);
 
 Wn5=[(1209-10)/(4*10^3) (1209+10)/(4*10^3)];
-[b5,a5] = cheby1(n,Rp,Wn5)
+[b5,a5] = cheby1(n,Rp,Wn5);
 
 Wn6=[(1336-10)/(4*10^3) (1336+10)/(4*10^3)];
-[b6,a6] = cheby1(n,Rp,Wn6)
+[b6,a6] = cheby1(n,Rp,Wn6);
 
 Wn7=[(1477-10)/(4*10^3) (1477+10)/(4*10^3)];
-[b7,a7] = cheby1(n,Rp,Wn7)
+[b7,a7] = cheby1(n,Rp,Wn7);
 
 Wn8=[(1633-10)/(4*10^3) (1633+10)/(4*10^3)];
-[b8,a8] = cheby1(n,Rp,Wn8)
+[b8,a8] = cheby1(n,Rp,Wn8);
+
+% Filterbanken
+btot=[b1;b2;b3;b4;b5;b6;b7;b8];
+atot=[a1;a2;a3;a4;a5;a6;a7;a8];
 
 
-btot=[b1;b2;b3;b4;b5;b6;b7;b8]
+% FÖr att lagra frekvenser
+bFrekv = [false; false; false; false; false; false; false; false];
+
+for k=1:8
+    y=filter(btot(k,:),atot(k,:),x)
+    figure(k)
+    plot(abs(fft(y)))
+    
+    N=960;
+    fs=8000;
+    
+    [value pos] = max(x(
+    
+end
 
 
+%%
 % y=conv(x,h)
 y1=filter(b1,a1,x)
 y2=filter(b5,a5,x)
@@ -52,11 +69,6 @@ plot(abs(fft(y1)))
 figure(2)
 plot(abs(fft(y2)))
 
-
-
-N=length(x)
-fs=8000
-knapp = [false false false false false false false false];
 
 test1 = abs(fft(y1));
 [value1 k1] = max(test1);
