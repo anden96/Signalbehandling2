@@ -1,5 +1,5 @@
 %% Röj upp lite 
-x1 = DTMFgen('1111',40,40,1);
+x1 = DTMFgen('*2D9',40,40,1);
 % figure(1)
 % plot(x1)
 % figure(2)
