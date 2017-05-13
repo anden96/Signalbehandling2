@@ -1,11 +1,10 @@
 %% Röj upp lite 
 x1 = DTMFgen('9AB0',40,40,2);
-figure(1)
 plot(x1)
 figure(2)
-plot(abs(fft(x1)))
+% plot(abs(fft(x1)));
 
-%%
+
 
 
 
@@ -72,13 +71,13 @@ for iterator=1:4
         
         y=filter(btot(k,:),atot(k,:),x);
 
-        N=length(x)
+        N=length(x);
         fs=8000;
 
         [value post] = max(abs(fft(y))) % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
 
         if(value-100 > 0)
-            value
+            value;
             bFrekv(k,1) = true;
     %         figure(k)
     %         plot(abs(fft(y)))
