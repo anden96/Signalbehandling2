@@ -1,6 +1,14 @@
 %% Röj upp lite 
-x = DTMFgen('1',40,40,0);
+x1 = DTMFgen('9',40,40,0.5);
+[row col] = size(x1)
+row
 
+
+Sign_iter=4;
+c=((Sign_iter-1)*640)+1;
+x=x1(c:(Sign_iter)*640,:);
+
+%%
 n=2;
 Rp=3;
 % Låga frekvenserna
@@ -44,24 +52,74 @@ btot=[b1;b2;b3;b4;b5;b6;b7;b8];
 atot=[a1;a2;a3;a4;a5;a6;a7;a8];
 
 
+
+
 % FÖr att lagra frekvenser
 bFrekv = [false; false; false; false; false; false; false; false];
-%%
+
+
+
 for k=1:8
-    y=filter(btot(k,:),atot(k,:),x)    
+    k
+    y=filter(btot(k,:),atot(k,:),x);
     
     N=960;
     fs=8000;
     
-    [value post] = max(y) % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
+    [value post] = max(abs(fft(y))) % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
     
     if(value-100 > 0)
         value
         bFrekv(k,1) = true;
-        figure(k)
-        plot(abs(fft(y)))
+%         figure(k)
+%         plot(abs(fft(y)))
     end
 end
+
+if(bFrekv(1) & bFrekv(5))
+    disp('Siffran 1')
+end
+if(bFrekv(1) & bFrekv(5))
+    disp('Siffran 1')
+elseif(bFrekv(1) & bFrekv(6))
+    disp('Siffran 2')
+elseif(bFrekv(1) & bFrekv(7))
+    disp('Siffran 3')
+elseif(bFrekv(1) & bFrekv(8))
+    disp('A')
+elseif(bFrekv(2) & bFrekv(5))
+    disp('Siffran 4')
+elseif(bFrekv(2) & bFrekv(6))
+    disp('Siffran 5')
+elseif(bFrekv(2) & bFrekv(7))
+    disp('Siffran 6')
+elseif(bFrekv(2) & bFrekv(8))
+    disp('B')
+elseif(bFrekv(3) & bFrekv(5))
+    disp('Siffran 7')
+elseif(bFrekv(3) & bFrekv(6))
+    disp('Siffran 8')
+elseif(bFrekv(3) & bFrekv(7))
+    disp('Siffran 9')
+elseif(bFrekv(3) & bFrekv(8))
+    disp('Siffran C')
+elseif(bFrekv(4) & bFrekv(5))
+    disp('*')
+elseif(bFrekv(4) & bFrekv(6))
+    disp('Siffran 0')
+elseif(bFrekv(4) & bFrekv(7))
+    disp('#')
+elseif(bFrekv(4) & bFrekv(8))
+    disp('D')
+end
+
+ 
+
+
+
+
+
+
 
 
 %%
@@ -77,6 +135,7 @@ plot(abs(fft(y2)))
 test1 = abs(fft(y1));
 [value1 k1] = max(test1);
 val1 = k1*fs/N;
+value1
 
 test2 = abs(fft(y2));
 [value2 k2] = max(test2);
