@@ -4,7 +4,7 @@ plot(x1)
 figure(2)
 % plot(abs(fft(x1)));
 
-
+% Kommentar från Rasmus
 
 
 
