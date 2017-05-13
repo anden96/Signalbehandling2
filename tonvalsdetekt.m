@@ -1,5 +1,5 @@
 %% Röj upp lite 
-x1 = DTMFgen('9AB0',40,40,0);
+x1 = DTMFgen('1111',40,40,1);
 % figure(1)
 % plot(x1)
 % figure(2)
@@ -7,7 +7,7 @@ x1 = DTMFgen('9AB0',40,40,0);
 
 % Kommentar från Rasmus
 
-
+disp('')
 
 n=2;
 Rp=3;
@@ -81,10 +81,7 @@ for iterator=1:4
     %         plot(abs(fft(y)))
         end
     end
-
-    if(bFrekv(1) & bFrekv(5))
-        disp('Siffran 1')
-    end
+    
     if(bFrekv(1) & bFrekv(5))
         disp('Siffran 1')
     elseif(bFrekv(1) & bFrekv(6))
@@ -112,7 +109,7 @@ for iterator=1:4
     elseif(bFrekv(4) & bFrekv(5))
         disp('*')
     elseif(bFrekv(4) & bFrekv(6))
-        disp('Siffran 0' + iterator)
+        disp('Siffran 0')
     elseif(bFrekv(4) & bFrekv(7))
         disp('#')
     elseif(bFrekv(4) & bFrekv(8))
