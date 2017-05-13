@@ -1,9 +1,9 @@
 %% Röj upp lite 
 x1 = DTMFgen('9AB0',40,40,0);
-figure(1)
-plot(x1)
-figure(2)
- plot(abs(fft(x1)));
+% figure(1)
+% plot(x1)
+% figure(2)
+%  plot(abs(fft(x1)));
 
 % Kommentar från Rasmus
 
@@ -54,15 +54,11 @@ length(x1)
 % Går igeonom 4 st symboler
 for iterator=1:4
 % 
-     x=x1((iterator-1)*640+1,960+(iterator-1)*640,:);
-    length(x)
+    x= x1((iterator-1)*640+1:960+(iterator-1)*640,:);
 
 %  C1=(iterator-1)*640+1
 %  C2=960+(iterator-1)*640
-end
-    
-    %%
-    disp('test')
+
 
     % FÖr att lagra frekvenser
     bFrekv = [false; false; false; false; false; false; false; false];
@@ -76,7 +72,7 @@ end
         N=length(x);
         fs=8000;
 
-        [value post] = max(abs(fft(y))) % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
+        [value post] = max(abs(fft(y))); % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
 
         if(value-100 > 0)
             value;
