@@ -1,9 +1,13 @@
 %% Röj upp lite 
-x1 = DTMFgen('9AB0',40,40,0.5);
+x1 = DTMFgen('*2D9',40,40,1);
+% figure(1)
+% plot(x1)
+% figure(2)
+%  plot(abs(fft(x1)));
 
+% Kommentar från Rasmus
 
-
-
+disp('')
 
 n=2;
 Rp=3;
@@ -18,6 +22,19 @@ Rp=3;
 % 7 - 1477Hz
 % 8 - 1633Hz
 % 
+
+frekvenser=[697;770;852;941;1209;1336;1477;1633];
+btot=zeros(4,5)
+atot=zeros(4,5);
+for k=1:length(frekvenser)
+    Wn=[(frekvenser(k,1)-10)/(4*10^3) (frekvenser(k,1)+10)/(4*10^3)];
+    [b a] = cheby1(n,Rp,Wn);
+    btot(k,:)=b;
+    atot(k,:)=a;
+    
+end
+
+%%
 Wn1=[(697-10)/(4*10^3) (697+10)/(4*10^3)];
 [b1,a1] = cheby1(n,Rp,Wn1);
 %  w=2*pi*667/8000;
@@ -46,44 +63,39 @@ Wn8=[(1633-10)/(4*10^3) (1633+10)/(4*10^3)];
 % Filterbanken
 btot=[b1;b2;b3;b4;b5;b6;b7;b8];
 atot=[a1;a2;a3;a4;a5;a6;a7;a8];
-
-
+length(x1)
+%%
+% Går igeonom 4 st symboler
 for iterator=1:4
+% 
+    x= x1((iterator-1)*640+1:960+(iterator-1)*640,:);
 
-    if(iterator==1)
-        x=x1(1:960,:);
-    else
-        
-        x=x1((iterator-1)*640+960:(iterator*640+960),:);
-    end
-    
-    
+%  C1=(iterator-1)*640+1
+%  C2=960+(iterator-1)*640
+
 
     % FÖr att lagra frekvenser
     bFrekv = [false; false; false; false; false; false; false; false];
 
 
-
+    % Kollar filter 
     for k=1:8
-        k
+        
         y=filter(btot(k,:),atot(k,:),x);
 
         N=length(x);
         fs=8000;
 
-        [value post] = max(abs(fft(y))) % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
+        [value post] = max(abs(fft(y))); % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
 
         if(value-100 > 0)
-            value
+            value;
             bFrekv(k,1) = true;
     %         figure(k)
     %         plot(abs(fft(y)))
         end
     end
-
-    if(bFrekv(1) & bFrekv(5))
-        disp('Siffran 1')
-    end
+    
     if(bFrekv(1) & bFrekv(5))
         disp('Siffran 1')
     elseif(bFrekv(1) & bFrekv(6))

@@ -22,6 +22,19 @@ Rp=3;
 % 7 - 1477Hz
 % 8 - 1633Hz
 % 
+
+frekvenser=[697;770;852;941;1209;1336;1477;1633];
+btot=zeros(8,5);
+atot=zeros(8,5);
+for k=1:length(frekvenser)
+    Wn=[(frekvenser(k,1)-10)/(4*10^3) (frekvenser(k,1)+10)/(4*10^3)];
+    [b a] = cheby1(n,Rp,Wn);
+    btot(k,:)=b;
+    atot(k,:)=a;
+    
+end
+
+%%
 Wn1=[(697-10)/(4*10^3) (697+10)/(4*10^3)];
 [b1,a1] = cheby1(n,Rp,Wn1);
 %  w=2*pi*667/8000;
@@ -50,7 +63,10 @@ Wn8=[(1633-10)/(4*10^3) (1633+10)/(4*10^3)];
 % Filterbanken
 btot=[b1;b2;b3;b4;b5;b6;b7;b8];
 atot=[a1;a2;a3;a4;a5;a6;a7;a8];
+
+%%
 length(x1)
+%%
 % Går igeonom 4 st symboler
 for iterator=1:4
 % 

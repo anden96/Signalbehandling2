@@ -41,52 +41,31 @@ x= x1((sym_idx-1)*640+1:960+(sym_idx-1)*640,:);
 
 
 n=2;
-Rp=3; 
+Rp=0.5; 
 % Höga frekvenser
 % 5 - 1209
 % 6 - 1336Hz
 % 7 - 1477Hz
 % 8 - 1633Hz
 % 
-Wn1=[(697-10)/(4*10^3) (697+10)/(4*10^3)];
-[b1,a1] = cheby1(n,Rp,Wn1);
-%  w=2*pi*667/8000;
-
-Wn2=[(770-10)/(4*10^3) (770+10)/(4*10^3)];
-[b2,a2] = cheby1(n,Rp,Wn2);
-
-Wn3=[(852-10)/(4*10^3) (852+10)/(4*10^3)];
-[b3,a3] = cheby1(n,Rp,Wn3);
-
-Wn4=[(941-10)/(4*10^3) (941+10)/(4*10^3)];
-[b4,a4] = cheby1(n,Rp,Wn4);
-
-Wn5=[(1209-10)/(4*10^3) (1209+10)/(4*10^3)];
-[b5,a5] = cheby1(n,Rp,Wn5);
-
-Wn6=[(1336-10)/(4*10^3) (1336+10)/(4*10^3)];
-[b6,a6] = cheby1(n,Rp,Wn6);
-
-Wn7=[(1477-10)/(4*10^3) (1477+10)/(4*10^3)];
-[b7,a7] = cheby1(n,Rp,Wn7);
-
-Wn8=[(1633-10)/(4*10^3) (1633+10)/(4*10^3)];
-[b8,a8] = cheby1(n,Rp,Wn8);
-
-% Filterbanken
-btot=[b1;b2;b3;b4;b5;b6;b7;b8];
-atot=[a1;a2;a3;a4;a5;a6;a7;a8];    
+frekvenser=[697;770;852;941;1209;1336;1477;1633];
+btot=zeros(8,5);
+atot=zeros(8,5);
+for k=1:length(frekvenser)
+    Wn=[(frekvenser(k,1)-10)/(4*10^3) (frekvenser(k,1)+10)/(4*10^3)];
+    [b a] = cheby1(n,Rp,Wn);
+    btot(k,:)=b;
+    atot(k,:)=a;
+    
+end
 
  bFrekv = [false; false; false; false; false; false; false; false];
     
 for k=1:8
-
-        y=filter(btot(k,:),atot(k,:),x);
-
-        N=length(x);
-        fs=8000;
-
-        [value post] = max(abs(fft(y))); % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
+    y=filter(btot(k,:),atot(k,:),x);
+    N=length(x);
+    fs=8000;
+    [value post] = max(abs(fft(y)));
 
         if(value-100 > 0)
             value;
