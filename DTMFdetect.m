@@ -91,37 +91,37 @@ for k=1:8
     end
     
     if(bFrekv(1) & bFrekv(5))
-        symbol='Siffran 1 ';
+        symbol='1';
     elseif(bFrekv(1) & bFrekv(6))
-        symbol='Siffran 2 '; 
+        symbol='2'; 
     elseif(bFrekv(1) & bFrekv(7))
-        symbol='Siffran 3 ';
+        symbol='3';
     elseif(bFrekv(1) & bFrekv(8))
-        symbol='A ';
+        symbol='A';
     elseif(bFrekv(2) & bFrekv(5))
-        symbol='Siffran 4 ';
+        symbol='4';
     elseif(bFrekv(2) & bFrekv(6))
-        symbol='Siffran 5 ';
+        symbol='5';
     elseif(bFrekv(2) & bFrekv(7))
-        symbol='Siffran 6 ';
+        symbol='6';
     elseif(bFrekv(2) & bFrekv(8))
-        symbol='B ';
+        symbol='B';
     elseif(bFrekv(3) & bFrekv(5))
-        symbol='Siffran 7 ';
+        symbol='7';
     elseif(bFrekv(3) & bFrekv(6))
-        symbol='Siffran 8 ';
+        symbol='8';
     elseif(bFrekv(3) & bFrekv(7))
-        symbol='Siffran 9 ';
+        symbol='9';
     elseif(bFrekv(3) & bFrekv(8))
-        symbol='Siffran C '; 
+        symbol='C'; 
     elseif(bFrekv(4) & bFrekv(5))
-        symbol='* ';
+        symbol='*';
     elseif(bFrekv(4) & bFrekv(6))
-        symbol='Siffran 0 ';
+        symbol='0';
     elseif(bFrekv(4) & bFrekv(7))
-        symbol='# ';
+        symbol='#';
     elseif(bFrekv(4) & bFrekv(8))
-        symbol='D ';
+        symbol='D';
     end
 
 end
