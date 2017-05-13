@@ -1,8 +1,9 @@
 %% Röj upp lite 
-x1 = DTMFgen('9AB0',40,40,2);
+x1 = DTMFgen('9AB0',40,40,0);
+figure(1)
 plot(x1)
 figure(2)
-% plot(abs(fft(x1)));
+ plot(abs(fft(x1)));
 
 % Kommentar från Rasmus
 
@@ -49,18 +50,19 @@ Wn8=[(1633-10)/(4*10^3) (1633+10)/(4*10^3)];
 % Filterbanken
 btot=[b1;b2;b3;b4;b5;b6;b7;b8];
 atot=[a1;a2;a3;a4;a5;a6;a7;a8];
-
+length(x1)
 % Går igeonom 4 st symboler
 for iterator=1:4
 % 
-    if(iterator==1)
-        x=x1(1:960,:);
-    else
-        
-        x=x1((iterator-2)*640+960:(iterator*640+960),:);
-    end
+     x=x1((iterator-1)*640+1,960+(iterator-1)*640,:);
+    length(x)
+
+%  C1=(iterator-1)*640+1
+%  C2=960+(iterator-1)*640
+end
     
-    
+    %%
+    disp('test')
 
     % FÖr att lagra frekvenser
     bFrekv = [false; false; false; false; false; false; false; false];
