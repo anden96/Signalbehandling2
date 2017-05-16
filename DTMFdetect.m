@@ -62,10 +62,13 @@ end
  bFrekv = [false; false; false; false; false; false; false; false];
     
 for k=1:8
-    y=filter(btot(k,:),atot(k,:),x);
-    N=length(x);
-    fs=8000;
-    [value post] = max(abs(fft(y)));
+
+        y=filter(btot(k,:),atot(k,:),x);
+
+        N=length(x);
+        fs=8000;
+
+        [value post] = max(abs(fft(y))); % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
 
         if(value-100 > 0)
             value;

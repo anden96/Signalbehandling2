@@ -1,10 +1,29 @@
 %% Röj upp lite 
-x1 = DTMFgen('*2D9',40,40,1);
-% figure(1)
-% plot(x1)
-% figure(2)
-%  plot(abs(fft(x1)));
-
+x1 = DTMFgen('2',40,40,5);
+x=x1(320:640,:);
+figure(1)
+  plot(x1)
+ figure(2)
+ 
+  plot(abs(fft(x1)));
+ 
+Wn=[(1209-10)/(4*10^3) (1209+10)/(4*10^3)];
+  Rp=0.5;
+  n=2;
+  [b a] = cheby1(n,Rp,Wn);
+    y=filter(b,a,x);
+        value = mean(abs(y)).^2; 
+    if( value -0.045 > 0)
+    figure(2)
+    plot(abs(fft(y)))
+    end
+%     med=mean(abs(fft(x)))
+%     maximumx=max(abs(fft(x1)))
+%     maximumy=max(abs(fft(y)))
+xmean=mean(abs(x)).^2
+  ymean=mean(abs(y)).^2
+  ymean/xmean
+%%
 % Kommentar från Rasmus
 
 disp('')
@@ -24,8 +43,8 @@ Rp=3;
 % 
 
 frekvenser=[697;770;852;941;1209;1336;1477;1633];
-btot=zeros(4,5)
-atot=zeros(4,5);
+btot=zeros(8,5);
+atot=zeros(8,5);
 for k=1:length(frekvenser)
     Wn=[(frekvenser(k,1)-10)/(4*10^3) (frekvenser(k,1)+10)/(4*10^3)];
     [b a] = cheby1(n,Rp,Wn);
@@ -63,12 +82,16 @@ Wn8=[(1633-10)/(4*10^3) (1633+10)/(4*10^3)];
 % Filterbanken
 btot=[b1;b2;b3;b4;b5;b6;b7;b8];
 atot=[a1;a2;a3;a4;a5;a6;a7;a8];
+
+%%
 length(x1)
 %%
 % Går igeonom 4 st symboler
+disp(" ");
+x1 = DTMFgen('AB30',40,40,2);
 for iterator=1:4
 % 
-    x= x1((iterator-1)*640+1:960+(iterator-1)*640,:);
+    x= x1((iterator-1)*640+320:(iterator)*640,:);
 
 %  C1=(iterator-1)*640+1
 %  C2=960+(iterator-1)*640
@@ -79,16 +102,34 @@ for iterator=1:4
 
 
     % Kollar filter 
-    for k=1:8
+    for k=1:4
         
         y=filter(btot(k,:),atot(k,:),x);
 
         N=length(x);
         fs=8000;
+        k;
+        value = mean(abs(y)).^2 ;
+        
+        % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
 
-        [value post] = max(abs(fft(y))); % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
+        if(value-0.021 >0)
+            value;
+            bFrekv(k,1) = true;
+    %         figure(k)
+    %         plot(abs(fft(y)))
+        end
+    end
+    
+    for k=5:8
+        y=filter(btot(k,:),atot(k,:),x);
 
-        if(value-100 > 0)
+        N=length(x);
+        fs=8000;
+
+         value = mean(abs(y)).^2 ; % Kommer behövas justeras när fler tecken ska in. Skapa en speciell vektor att studera
+
+        if(value-0.03 > 0)
             value;
             bFrekv(k,1) = true;
     %         figure(k)
